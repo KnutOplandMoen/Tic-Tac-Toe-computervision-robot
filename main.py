@@ -1,97 +1,101 @@
-import pygame
-import sys
-import time
+# -*- coding: utf-8 -*-
+"""
+main file
+"""
 
-import funksjoner as ttt
+import serial
+import functions as f
+import cv2
 
-pygame.init()
-size = width, height = 600, 400
+HUMAN = -1
+COMP = +1
 
-# Colors
-black = (0, 0, 0)
-white = (255, 255, 255)
+#defining serial port and baud rate
+ser = serial.Serial('COM3', 9600)  
 
-screen = pygame.display.set_mode(size)
-
-mediumFont = pygame.font.Font("OpenSans-Regular.ttf", 28)
-largeFont = pygame.font.Font("OpenSans-Regular.ttf", 40)
-moveFont = pygame.font.Font("OpenSans-Regular.ttf", 60)
-
-user = None
-board = ttt.initial_state()
-ai_turn = False
-
-while True:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-
-    screen.fill(black)
-
-    # Let user choose a player.
-    if user is None:
-        svar = str(input('X eller O? '))
-        if svar == 'X':
-            user = ttt.X
-            print('menneske spiller som O')
-        elif svar == 'O':
-            user = ttt.O
-            print('menneske spiller som X')
-
-    else:
-        game_over = ttt.terminal(board)
-        player = ttt.player(board)
-
-        # Show title
-        if game_over:
-            winner = ttt.winner(board)
-            if winner is None:
-                print('uavgjort')
-            else:
-                print('f"Game Over: {winner} wins."')
-        elif user == player:
-            title = f"Play as {user}"
+def main():
+    """
+    Main function that calls all functions
+    """
+    while True:  
+        
+        board = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        ]
+        
+        BR1 = 1
+        BR2 = 2
+        BR3 = 3
+        BR4 = 4
+        BR5 = 5
+        
+        f.clean()
+        h_choice = 'B'  
+        c_choice = 'R'   
+        
+        vid = cv2.VideoCapture(1)
+        f.say('heeellllooooo, my name is Steve. lets play a game of tictactoe')
+        
+        f.clean()
+        
+        humanfirst = True
+    
+        while len(f.empty_cells(board)) > 0 and not f.game_over(board):
+            if not humanfirst:
+                aimove = f.ai_turn(c_choice, h_choice, board)
+                BR1, BR2, BR3, BR4, BR5 = f.bricknumber(aimove, BR1, BR2, BR3, BR4, BR5)
+                brick = max([BR1, BR2, BR3, BR4, BR5])
+                send = f.arduinomove(aimove, brick)
+                print('\nplacing brick number', brick-10,'in tile number', aimove)
+                f.sendarduino(send, ser)
+                f.say('your, turn')
+                humanfirst = True
+            
+            hmove = f.human_turn(c_choice, h_choice, board, vid) 
+            if hmove == 'finished':
+                break
+            
+            aimove = f.ai_turn(c_choice, h_choice, board) 
+            if aimove == 'finished':
+                break          
+            
+            BR1, BR2, BR3, BR4, BR5 = f.bricknumber(aimove, BR1, BR2, BR3, BR4, BR5)
+            brick = max([BR1, BR2, BR3, BR4, BR5])
+            send = f.arduinomove(aimove, brick)
+            print('\nplacing brick number', brick-10,'in tile number', aimove)
+            f.sendarduino(send, ser)
+            f.say('your, turn')
+            
+            
+        if f.wins(board, HUMAN):
+            f.clean()
+            f.say('good game, you won')
+            f.render(board, c_choice, h_choice)
+            print('Human wins!')
+            if not f.new():
+                break
+            
+        elif f.wins(board, COMP):
+            f.clean()
+            f.say('noob, you cant even win against me')
+            f.render(board, c_choice, h_choice)
+            print('You lost!')
+            if not f.new():
+                break
+            
         else:
-            title = f"Computer thinking..."
-        title = largeFont.render(title, True, white)
-        titleRect = title.get_rect()
-        titleRect.center = ((width / 2), 30)
-        screen.blit(title, titleRect)
+            f.clean()
+            f.render(board, c_choice, h_choice)
+            f.say('it is a tie.')
+            print('tie!')
+            if not f.new():
+                break
 
-        # Check for AI move
-        if user != player and not game_over:
-            if ai_turn:
-                time.sleep(0.5)
-                move = ttt.minimax(board)
-                board = ttt.result(board, move)
-                ai_turn = False
-            else:
-                ai_turn = True
 
-        # Check for a user move
-        click, _, _ = pygame.mouse.get_pressed()
-        if click == 1 and user == player and not game_over:
-            mouse = pygame.mouse.get_pos()
-            for i in range(3):
-                for j in range(3):
-                    if (board[i][j] == ttt.EMPTY and tiles[i][j].collidepoint(mouse)):
-                        board = ttt.result(board, (i, j))
+if __name__ == '__main__':
+    main()
 
-        if game_over:
-            againButton = pygame.Rect(width / 3, height - 65, width / 3, 50)
-            again = mediumFont.render("Play Again", True, black)
-            againRect = again.get_rect()
-            againRect.center = againButton.center
-            pygame.draw.rect(screen, white, againButton)
-            screen.blit(again, againRect)
-            click, _, _ = pygame.mouse.get_pressed()
-            if click == 1:
-                mouse = pygame.mouse.get_pos()
-                if againButton.collidepoint(mouse):
-                    time.sleep(0.2)
-                    user = None
-                    board = ttt.initial_state()
-                    ai_turn = False
-
-    pygame.display.flip()
+#closing serial port 
+ser.close()
