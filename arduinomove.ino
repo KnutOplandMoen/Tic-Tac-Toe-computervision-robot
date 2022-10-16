@@ -1,6 +1,6 @@
 #include <Servo.h>
 #include <SoftwareSerial.h>
-Servo servo1; //Servos
+Servo servo1; 
 Servo servo2;
 Servo servo3;
 Servo servo4;
@@ -27,6 +27,7 @@ void setup() {
 }
 
 void startsted1()
+//collecting the chip from startingposition 1
 {
   for (pos = 90; pos >= 0; pos -= 1) { 
     //for loop that goes from one position another with a given 
@@ -59,7 +60,6 @@ void startsted1()
   
 delay(2000);
 
-// Mellom posisjon
   
   for (pos = 173; pos >= 90; pos -= 1) { 
 
@@ -89,7 +89,7 @@ delay(2000);
 
 void startsted2()
 {
-      // Henter brikke
+  //collecting the chip from starting position 2
   for (pos = 90; pos <= 110; pos += 1) { 
 
     servo4.write(pos); // tell servo to go to position in variable "pos"
@@ -120,8 +120,6 @@ void startsted2()
   }
   
 delay(2000);
-
-// Mellom posisjon
   
   for (pos = 168; pos >= 90; pos -= 1) { 
 
@@ -149,7 +147,7 @@ delay(2000);
 
 void startsted3()
 {
-  // Henter brikke
+  //collecting the chip
   for (pos = 90; pos >= 0; pos -= 1) { 
 
     servo4.write(pos); // tell servo to go to position in variable "pos"
@@ -180,9 +178,7 @@ void startsted3()
   }
   
 delay(2000);
-
-// Mellom posisjon
-  
+ 
   for (pos = 165; pos >= 90; pos -= 1) { 
 
     servo2.write(pos);// tell servo to go to position in variable "pos"
@@ -209,7 +205,7 @@ delay(2000);
 
  void startsted4()
  {
-     // Henter brikke
+  //collecting the chip
   for (pos = 90; pos <= 110; pos += 1) { 
 
     servo4.write(pos);// tell servo to go to position in variable "pos"
@@ -240,8 +236,6 @@ delay(2000);
   }
   
 delay(2000);
-
-// Mellom posisjon
   
   for (pos = 168; pos >= 90; pos -= 1) { 
 
@@ -269,7 +263,7 @@ delay(2000);
  
 void startsted5()
 {
-      // Henter brikke
+  //collecting the chip 
   for (pos = 90; pos <= 150; pos += 1) { 
 
     servo4.write(pos); // tell servo to go to position in variable "pos"
@@ -336,10 +330,10 @@ delay(2000);
 
 void loop() {
 if (Serial.available() > 0) {
-  //leser incomingbyte fra python 
+  //reads incomingbyte from python 
  incomingByte = Serial.read();
- //oversetter incomingbyte til hvor brikken skal hentes fra (brikke)
- //og til hvilken rute brikken skal til (dataval) og lagrer disse variablene
+ //translates incomingbyte to what chip is being picket up (brikke)
+ //and to what route the chip is going to (dataval) and saves these two values
   
  if (incomingByte == 'a')
  {
@@ -623,7 +617,8 @@ if (dataval == 9)
   else if (brikke == 5){
     startsted5();
   }
-//Skal legge brikke på bordet
+
+ //putting the chip on the table
 
   for (pos = 110; pos <= 150; pos += 1) { 
 
@@ -651,7 +646,7 @@ if (dataval == 9)
 
 delay(2000);
   
-//Går tilbake til startposisjon    
+//going back to starting position     
     
  for (pos = 150; pos >= 5; pos -= 1) { 
 
@@ -703,7 +698,7 @@ else if (dataval == 8)
     startsted5();
   }
 
-//Legger brikke på bordet 
+//putting the chip on the table 
 
   for (pos = 110; pos <= 130; pos += 1) { 
 
@@ -730,7 +725,7 @@ else if (dataval == 8)
     delay(15); // waits 15ms for the servo to reach the position
   }
 
-  //Går tilbake til startposisjon
+  //going back to start position 
 delay(2000);
 
   for (pos = 25; pos >= 0; pos -= 1) { 
@@ -784,7 +779,7 @@ else if (dataval == 7)
   }
 
 
-//Legger brikke på bordet 
+//putting the chip on the table
 
   for (pos = 110; pos >= 80; pos -= 1) { 
 
@@ -1101,9 +1096,6 @@ else if (dataval == 3)
   else if (brikke == 5){
     startsted5();
   }
-
-
-    //Skal legge brikke på bordet
  
   for (pos = 110; pos >= 85; pos -= 1) { 
 
