@@ -1,17 +1,14 @@
 # Tic-Tac-Toe Computervision-robot
-<br> the drawn vision of the finished robot from the start of the semester:
-<br> ![image](https://user-images.githubusercontent.com/92923535/196031628-01bc2e85-5289-4eae-8ab2-f534e63299fe.png)
-<br> Robot in action at the showcase event at the end of the semester:
 <br> ![image](https://user-images.githubusercontent.com/92923535/196031416-8fcfd1de-fdb2-44fc-b976-bc96f3b4da77.png)
-
-
 # introduction
-this project was part of a half year prosess in the subject "technology and science" at Ullern VGS. 
+this project was part of a half year prosess in the subject "technology and science" at Ullern VGS where we (the students) could choose our own project. 
 
-The minimax algorithm and some game functions is based on Cledersonbc's minimax algorithm for tictactoe. too get a more in depth explenation about this see: https://github.com/Cledersonbc/tic-tac-toe-minimax
+our project is a tic-tac-toe robot, that is fully autonomous. The robot sees via its camera, "thinks" by the help of the minimax algorithm and moves with the help of a servo motor, arduino based arm. 
 
-the projects ecosystem is based on the information flow from camera -> computer -> arduino:
+the projects ecosystem is then based on the information flow from camera -> computer -> arduino:
 ![image](https://user-images.githubusercontent.com/92923535/196031242-1bc67bfb-bee0-4e38-b3ff-3e5aef0f86ba.png)
+
+The minimax algorithm and some of the game functions is based on Cledersonbc's minimax algorithm for tic-tac-toe. too get a more in depth explenation about this see: https://github.com/Cledersonbc/tic-tac-toe-minimax
 
 # program explenation
 The camera is the only sensor used in this project. The image taken by the camera does not provide much information, but it is passed on to Python where the data in the image is analyzed and used to, for example, see that a chip has been moved. In Python, the camera information is used in two functions: seeboard(minutes) and playermove(board). in both of these functions, the cv2 library is used to find the color blue or red in the image. In playermove(board) this is used to find where a new move has been placed. Furthermore, in the playermove(board) function, the mediapipe library is also used to see hands in the image, to then stop search for the color red or blue. In seeboard(minutes) the cv2 library is used, to then draw an outline of found pieces to create a visual image of what the robot sees.
@@ -24,4 +21,8 @@ Example if incomingByte = 'a' then the robot will pick up the chip in position 1
 # arduino circuit: 
 ![image](https://user-images.githubusercontent.com/92923535/196031305-26034fe3-a27b-44f7-b47b-3fd815e8246a.png)
 
-
+# pictures
+<br> the drawn vision of the finished robot from the start of the semester:
+<br> ![image](https://user-images.githubusercontent.com/92923535/196031628-01bc2e85-5289-4eae-8ab2-f534e63299fe.png)
+<br> Robot in action at the showcase event at the end of the semester:
+<br> ![image](https://user-images.githubusercontent.com/92923535/196031416-8fcfd1de-fdb2-44fc-b976-bc96f3b4da77.png)
