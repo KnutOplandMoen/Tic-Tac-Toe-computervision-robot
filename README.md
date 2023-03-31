@@ -28,7 +28,6 @@ Example if incomingByte = 'a' then the robot will pick up the chip in position 1
 ![image](https://user-images.githubusercontent.com/92923535/196031305-26034fe3-a27b-44f7-b47b-3fd815e8246a.png)
 
 # pictures
-<br> the drawn vision of the finished robot from the start of the semester:
+<br> the drawn vision of the finished robot from the start of the semester and finished robot:
 <br> ![image](https://user-images.githubusercontent.com/92923535/196031628-01bc2e85-5289-4eae-8ab2-f534e63299fe.png)
-<br> Robot in action at the showcase event at the end of the semester:
 <br> ![image](https://user-images.githubusercontent.com/92923535/196031416-8fcfd1de-fdb2-44fc-b976-bc96f3b4da77.png)
