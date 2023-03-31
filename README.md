@@ -1,5 +1,4 @@
 # Tic-Tac-Toe Computervision-robot
-<br> ![image](https://user-images.githubusercontent.com/92923535/196031416-8fcfd1de-fdb2-44fc-b976-bc96f3b4da77.png)
 # Introduction
 this project was part of a half year prosess in the subject "technology and science" at Ullern VGS where we (the students) could choose our own project. 
 
