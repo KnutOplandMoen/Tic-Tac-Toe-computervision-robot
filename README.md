@@ -1,8 +1,6 @@
 # Tic-Tac-Toe Computervision-robot
 # Introduction
-this project was part of a half year prosess in the subject "technology and science" at Ullern VGS where we (the students) could choose our own project. 
-
-our project is a tic-tac-toe robot, that is fully autonomous. The robot sees via its camera, "thinks" by the help of the minimax algorithm and moves with the help of a servo motor, arduino based arm. 
+A tic-tac-toe robot, that is fully autonomous. The robot sees via its camera, "thinks" by the help of the minimax algorithm and moves with the help of a servo motor, arduino based arm. 
 
 the projects ecosystem is then based on the information flow from camera -> computer -> arduino:
 ![image](https://user-images.githubusercontent.com/92923535/196031242-1bc67bfb-bee0-4e38-b3ff-3e5aef0f86ba.png)
